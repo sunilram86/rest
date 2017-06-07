@@ -1,0 +1,76 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: "jacoco"
+
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    assessment {
+        java.srcDir file('assessment/java')
+        resources.srcDir file('assessment/resources')
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.9
+            }
+        }
+    }
+}
+
+// send more details to the command line when tests fail
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.8.0'
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('mysql:mysql-connector-java')
+    testCompile('org.apache.httpcomponents:httpclient')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.security:spring-security-test')
+
+    assessmentCompile sourceSets.main.output
+    assessmentCompile configurations.testCompile
+    assessmentCompile sourceSets.test.output
+    assessmentRuntime configurations.testRuntime
+}
+
+task assess(type: Test) {
+    testClassesDir = sourceSets.assessment.output.classesDir
+    classpath = sourceSets.assessment.runtimeClasspath
+}
+
+test.finalizedBy(jacocoTestReport)
+jacocoTestReport.finalizedBy(jacocoTestCoverageVerification)
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
+}

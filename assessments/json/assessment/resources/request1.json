@@ -1,0 +1,32 @@
+{
+  "activities": [
+    {
+      "user": {
+        "id": 1467,
+        "username": "someuser",
+        "emails": [
+          {"id": 91, "address": "personal@example.com", "primary": true},
+          {"id": 47, "address": "work@example.com", "primary": false}
+        ]
+      },
+      "status": {
+        "text": "Just went snowboarding today!",
+        "date": "2017-04-02 01:32"
+      }
+    },
+    {
+      "user": {
+        "id": 98732,
+        "username": "otheruser",
+        "emails": [
+          {"id": 22, "address": "other@example.com", "primary": false},
+          {"id": 35, "address": "otherprimary@example.com", "primary": true}
+        ]
+      },
+      "status": {
+        "text": "Great times!",
+        "date": "2016-04-02 01:32"
+      }
+    }
+  ]
+}

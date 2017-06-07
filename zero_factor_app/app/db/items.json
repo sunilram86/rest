@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Late",
+    "description": "Grande Late",
+    "price": 2.50
+  },
+  {
+    "id": 2,
+    "name": "Breakfast Bap",
+    "description": "Deliciously unhealthy breakfast food",
+    "price": 4.00
+  },
+  {
+    "id": 3,
+    "name": "Ploughman's Sandwich",
+    "description": "A carnevore's nightmare",
+    "price": 4.00
+  }
+]

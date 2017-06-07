@@ -1,0 +1,27 @@
+version: '2.1'
+
+services:
+  mysql:
+    image: "mysql/mysql-server"
+    command: >
+      mysqld --init-file="/tmp/database/create_db.sql"
+    healthcheck:
+      test: exit 0
+    expose:
+      - 3306
+    volumes:
+      - ./database:/tmp/database
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+
+  spring:
+    build: .
+    environment:
+      - SPRING_APPLICATION_JSON=${SPRING_APPLICATION_JSON}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    links:
+      - mysql
+

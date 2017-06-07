@@ -1,0 +1,27 @@
+{
+  "name": "sunshine-forge-client",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "enzyme": "^2.7.1",
+    "react-addons-test-utils": "^15.4.2",
+    "react-scripts": "0.8.5",
+    "sinon": "^1.17.7",
+    "sync-promise": "^1.1.0",
+    "synchronous-promise": "^1.0.7"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "es6bindall": "0.0.9",
+    "react": "^15.4.2",
+    "react-bootstrap": "^0.30.7",
+    "react-dom": "^15.4.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom --no-cache --colors --debug --runInBand --verbose",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:8080"
+}

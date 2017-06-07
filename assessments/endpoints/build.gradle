@@ -1,0 +1,75 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: "jacoco"
+
+jar {
+    baseName = '01-endpoints'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    assessment {
+        java.srcDir file('assessment/java')
+        resources.srcDir file('assessment/resources')
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.9
+            }
+        }
+    }
+}
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('com.jayway.jsonpath:json-path-assert:2.2.0')
+
+    assessmentCompile sourceSets.main.output
+    assessmentCompile configurations.testCompile
+    assessmentCompile sourceSets.test.output
+    assessmentRuntime configurations.testRuntime
+}
+
+task assess(type: Test) {
+    testClassesDir = sourceSets.assessment.output.classesDir
+    classpath = sourceSets.assessment.runtimeClasspath
+}
+
+test.finalizedBy(jacocoTestReport)
+jacocoTestReport.finalizedBy(jacocoTestCoverageVerification)
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4.1'
+}

@@ -1,0 +1,1 @@
+java Admin $1
